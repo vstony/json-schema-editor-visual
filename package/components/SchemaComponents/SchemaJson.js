@@ -245,6 +245,45 @@ class SchemaArray extends PureComponent {
 
     let prefixArrayStr = [].concat(prefixArray, 'properties').join(JSONPATH_JOIN_CHAR);
     let showIcon = this.context.getOpenValue([prefixArrayStr]);
+
+    if(items.type == "string") {
+      this.descSpan = 2;
+      this.minLengthSpan = 2;
+      this.maxLengthSpan = 2;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(items.type == "number" || items.type == "integer") {
+      this.descSpan = 2;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 2;
+      this.maximumSpan = 2;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(items.type == "array" || items.type == "object") {
+      this.descSpan = 10;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 0;
+    } else if(items.type == "boolean") {
+      this.descSpan = 8;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 2;
+      this.patternSpan = 0;
+    }
+
     return (
       !_.isUndefined(data.items) && (
         <div className="array-type">
@@ -631,6 +670,45 @@ class SchemaItem extends PureComponent {
     let prefixArrayStr = [].concat(prefixArray, 'properties').join(JSONPATH_JOIN_CHAR);
     let show = this.context.getOpenValue([prefixStr]);
     let showIcon = this.context.getOpenValue([prefixArrayStr]);
+    
+    if(value.type == "string") {
+      this.descSpan = 2;
+      this.minLengthSpan = 2;
+      this.maxLengthSpan = 2;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(value.type == "number" || value.type == "integer") {
+      this.descSpan = 2;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 2;
+      this.maximumSpan = 2;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(value.type == "array" || value.type == "object") {
+      this.descSpan = 10;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 0;
+    } else if(value.type == "boolean") {
+      this.descSpan = 8;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 2;
+      this.patternSpan = 0;
+    }
+
     return show ? (
       <div>
         <Row type="flex" justify="space-around" align="middle">
