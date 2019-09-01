@@ -426,25 +426,14 @@ class jsonSchema extends React.Component {
                   />
                 </Col>
               )}
-              <Col span={this.props.isMock ? 2 : 3} className="col-item col-item-desc">
+              <Col span={this.props.isMock ? 10 : 11} className="col-item col-item-desc">
                 <Input
                   placeholder={LocalProvider('description')}
                   value={schema.description}
                   onChange={e => this.changeValue(['description'], e.target.value)}
+                  title={LocalProvider('description')}
                 />
               </Col>
-							<Col span={2} className="col-item col-item-min">
-							  <Input placeholder={LocalProvider('minLength')} disabled />
-							</Col>
-							<Col span={2} className="col-item col-item-max">
-							  <Input placeholder={LocalProvider('maxLength')} disabled />
-							</Col>
-							<Col span={2} className="col-item col-item-default">
-							  <Input placeholder={LocalProvider('default')} disabled />
-							</Col>
-							<Col span={2} className="col-item col-item-pattern">
-							  <Input placeholder={LocalProvider('pattern')} disabled />
-							</Col>
               <Col span={3} className="col-item col-item-setting">
                 <span className="adv-set" onClick={() => this.showAdv([], this.props.schema)}>
                   <Tooltip placement="top" title={LocalProvider('adv_setting')}>

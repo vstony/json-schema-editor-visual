@@ -10,6 +10,7 @@ import {
   Button,
   Icon,
   Input,
+  InputNumber,
   Modal,
   message,
   Tooltip
@@ -48,6 +49,15 @@ class SchemaArray extends PureComponent {
     super(props);
     this._tagPaddingLeftStyle = {};
     this.Model = context.Model.schema;
+
+    this.descSpan = 2;
+    this.minLengthSpan = 2;
+    this.maxLengthSpan = 2;
+    this.minimumSpan = 0;
+    this.maximumSpan = 0;
+    this.defaultSpan = 2;
+    this.defaultBooleanSpan = 0;
+    this.patternSpan = 2;
   }
 
   componentWillMount() {
@@ -67,6 +77,44 @@ class SchemaArray extends PureComponent {
     let prefix = this.getPrefix();
     let key = [].concat(prefix, 'type');
     this.Model.changeTypeAction({ key, value });
+
+    if(value == "string") {
+      this.descSpan = 2;
+      this.minLengthSpan = 2;
+      this.maxLengthSpan = 2;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(value == "number" || value == "integer") {
+      this.descSpan = 2;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 2;
+      this.maximumSpan = 2;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(value == "array" || value == "object") {
+      this.descSpan = 10;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 0;
+    } else if(value == "boolean") {
+      this.descSpan = 8;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 2;
+      this.patternSpan = 0;
+    }
   };
 
   // 修改备注信息
@@ -77,37 +125,86 @@ class SchemaArray extends PureComponent {
     this.Model.changeValueAction({ key, value });
   };
 
-	// 修改minLength信息
-	handleChangeMinLength = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'minLength');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
+  // 修改minLength信息
+  handleChangeMinLength = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'minLength');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
 
-	// 修改maxLength信息
-	handleChangeMaxLength = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'maxLength');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
+  // 修改maxLength信息
+  handleChangeMaxLength = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'maxLength');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
 
-	// 修改default信息
-	handleChangeDefault = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'default');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
-	
-	// 修改pattern信息
-	handleChangePattern = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'pattern');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
+  // 修改default信息
+  handleChangeDefault = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'default');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
+
+  // 修改default信息
+  handleChangeDefaultBoolean = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'default');
+    let value = e;
+    if(value === 'true') {
+      value = true;
+    } else {
+      value = false;
+    }
+    this.Model.changeValueAction({ key, value });
+  };
+
+  // 修改pattern信息
+  handleChangePattern = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'pattern');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
+
+  // 修改minimum信息
+  handleChangeMinimum = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'minimum');
+    let value = e;
+    this.Model.changeValueAction({ key, value });
+
+    if(value !== null && value !== '') {
+      key = [].concat(prefix, 'exclusiveMinimum');
+      value = true;
+      this.Model.changeValueAction({ key, value });
+    } else {
+      key = [].concat(prefix, 'exclusiveMinimum');
+      value = "";
+      this.Model.changeValueAction({ key, value });
+    }
+  };
+
+  // 修改maximum信息
+  handleChangeMaximum = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'maximum');
+    let value = e;
+    this.Model.changeValueAction({ key, value });
+
+    if(value !== null && value !== '') {
+      key = [].concat(prefix, 'exclusiveMaximum');
+      value = true;
+      this.Model.changeValueAction({ key, value });
+    } else {
+      key = [].concat(prefix, 'exclusiveMaximum');
+      value = "";
+      this.Model.changeValueAction({ key, value });
+    }
+  };
 
   // 修改mock信息
   handleChangeMock = e => {
@@ -200,41 +297,73 @@ class SchemaArray extends PureComponent {
                 />
               </Col>
             )}
-            <Col span={this.context.isMock ? 2 : 3} className="col-item col-item-desc">
+            <Col span={this.context.isMock ? this.descSpan : this.descSpan+1} className="col-item col-item-desc">
               <Input
                 placeholder={LocaleProvider('description')}
                 value={items.description}
                 onChange={this.handleChangeDesc}
+                title={LocaleProvider('description')}
               />
             </Col>
-						<Col span={2} className="col-item col-item-min">
-						  <Input
-						    placeholder={LocaleProvider('minLength')}
-						    value={items.minLength}
-						    onChange={this.handleChangeMinLength}
-						  />
-						</Col>
-						<Col span={2} className="col-item col-item-max">
-						  <Input
-						    placeholder={LocaleProvider('maxLength')}
-						    value={items.maxLength}
-						    onChange={this.handleChangeMaxLength}
-						  />
-						</Col>
-						<Col span={2} className="col-item col-item-default">
-						  <Input
-						    placeholder={LocaleProvider('default')}
-						    value={items.default}
-						    onChange={this.handleChangeDefault}
-						  />
-						</Col>
-						<Col span={2} className="col-item col-item-pattern">
-						  <Input
-						    placeholder={LocaleProvider('pattern')}
-						    value={items.pattern}
-						    onChange={this.handleChangePattern}
-						  />
-						</Col>
+            <Col span={this.minLengthSpan} className="col-item col-item-minLength">
+              <Input
+                placeholder={LocaleProvider('minLength')}
+                value={items.minLength}
+                onChange={this.handleChangeMinLength}
+                title={LocaleProvider('minLength')}
+              />
+            </Col>
+            <Col span={this.maxLengthSpan} className="col-item col-item-maxLength">
+              <Input
+                placeholder={LocaleProvider('maxLength')}
+                value={items.maxLength}
+                onChange={this.handleChangeMaxLength}
+                title={LocaleProvider('maxLength')}
+              />
+            </Col>
+            <Col span={this.minimumSpan} className="col-item col-item-minimum">
+              <InputNumber
+                placeholder={LocaleProvider('minimum')}
+                value={items.minimum}
+                onChange={this.handleChangeMinimum}
+                title={LocaleProvider('minimum')}
+              />
+            </Col>
+            <Col span={this.maximumSpan} className="col-item col-item-maximum">
+              <InputNumber
+                placeholder={LocaleProvider('maximum')}
+                value={items.maximum}
+                onChange={this.handleChangeMaximum}
+                title={LocaleProvider('maximum')}
+              />
+            </Col>
+            <Col span={this.defaultSpan} className="col-item col-item-default">
+              <Input
+                placeholder={LocaleProvider('default')}
+                value={items.default}
+                onChange={this.handleChangeDefault}
+                title={LocaleProvider('default')}
+              />
+            </Col>
+            <Col span={this.defaultBooleanSpan} className="col-item col-item-defaultBoolean">
+              <Select
+                value={_.isUndefined(items.default) ? '' : items.default ? 'true' : 'false'}
+                onChange={this.handleChangeDefaultBoolean}
+                placeholder={LocaleProvider('default')}
+                style={{ width: '100%' }}
+              >
+                <Option value="true">true</Option>
+                <Option value="false">false</Option>
+              </Select>
+            </Col>
+            <Col span={this.patternSpan} className="col-item col-item-pattern">
+              <Input
+                placeholder={LocaleProvider('pattern')}
+                value={items.pattern}
+                onChange={this.handleChangePattern}
+                title={LocaleProvider('pattern')}
+              />
+            </Col>
             <Col span={3} className="col-item col-item-setting">
               <span className="adv-set" onClick={this.handleShowAdv}>
                 <Tooltip placement="top" title={LocaleProvider('adv_setting')}>
@@ -270,6 +399,15 @@ class SchemaItem extends PureComponent {
     this._tagPaddingLeftStyle = {};
     // this.num = 0
     this.Model = context.Model.schema;
+
+    this.descSpan = 2;
+    this.minLengthSpan = 2;
+    this.maxLengthSpan = 2;
+    this.minimumSpan = 0;
+    this.maximumSpan = 0;
+    this.defaultSpan = 2;
+    this.defaultBooleanSpan = 0;
+    this.patternSpan = 2;
   }
 
   componentWillMount() {
@@ -303,38 +441,87 @@ class SchemaItem extends PureComponent {
     let value = e.target.value;
     this.Model.changeValueAction({ key, value });
   };
-	
-	// 修改minLength信息
-	handleChangeMinLength = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'minLength');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
+  
+  // 修改minLength信息
+  handleChangeMinLength = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'minLength');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
 
-	// 修改maxLength信息
-	handleChangeMaxLength = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'maxLength');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
-	
-	// 修改default信息
-	handleChangeDefault = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'default');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
-	
-	// 修改pattern信息
-	handleChangePattern = e => {
-	  let prefix = this.getPrefix();
-	  let key = [].concat(prefix, 'pattern');
-	  let value = e.target.value;
-	  this.Model.changeValueAction({ key, value });
-	};
+  // 修改maxLength信息
+  handleChangeMaxLength = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'maxLength');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
+
+  // 修改minimum信息
+  handleChangeMinimum = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'minimum');
+    let value = e;
+    this.Model.changeValueAction({ key, value });
+
+    if(value !== null && value !== '') {
+      key = [].concat(prefix, 'exclusiveMinimum');
+      value = true;
+      this.Model.changeValueAction({ key, value });
+    } else {
+      key = [].concat(prefix, 'exclusiveMinimum');
+      value = "";
+      this.Model.changeValueAction({ key, value });
+    }
+  };
+
+  // 修改maximum信息
+  handleChangeMaximum = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'maximum');
+    let value = e;
+    this.Model.changeValueAction({ key, value });
+
+    if(value !== null && value !== '') {
+      key = [].concat(prefix, 'exclusiveMaximum');
+      value = true;
+      this.Model.changeValueAction({ key, value });
+    } else {
+      key = [].concat(prefix, 'exclusiveMaximum');
+      value = "";
+      this.Model.changeValueAction({ key, value });
+    }
+  };
+
+  // 修改default信息
+  handleChangeDefault = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'default');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
+
+  // 修改default信息
+  handleChangeDefaultBoolean = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'default');
+    let value = e;
+    if(value === 'true') {
+      value = true;
+    } else {
+      value = false;
+    }
+    this.Model.changeValueAction({ key, value });
+  };
+
+  // 修改pattern信息
+  handleChangePattern = e => {
+    let prefix = this.getPrefix();
+    let key = [].concat(prefix, 'pattern');
+    let value = e.target.value;
+    this.Model.changeValueAction({ key, value });
+  };
 
   // 修改mock 信息
   handleChangeMock = e => {
@@ -349,6 +536,44 @@ class SchemaItem extends PureComponent {
     let prefix = this.getPrefix();
     let key = [].concat(prefix, 'type');
     this.Model.changeTypeAction({ key, value: e });
+
+    if(e == "string") {
+      this.descSpan = 2;
+      this.minLengthSpan = 2;
+      this.maxLengthSpan = 2;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(e == "number" || e == "integer") {
+      this.descSpan = 2;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 2;
+      this.maximumSpan = 2;
+      this.defaultSpan = 2;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 2;
+    } else if(e == "array" || e == "object") {
+      this.descSpan = 10;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 0;
+      this.patternSpan = 0;
+    } else if(e == "boolean") {
+      this.descSpan = 8;
+      this.minLengthSpan = 0;
+      this.maxLengthSpan = 0;
+      this.minimumSpan = 0;
+      this.maximumSpan = 0;
+      this.defaultSpan = 0;
+      this.defaultBooleanSpan = 2;
+      this.patternSpan = 0;
+    }
   };
 
   // 删除节点
@@ -445,7 +670,6 @@ class SchemaItem extends PureComponent {
             </Row>
           </Col>
 
-
           <Col span={2} className="col-item col-item-type">
             <Select
               className="type-select-style"
@@ -461,7 +685,6 @@ class SchemaItem extends PureComponent {
               })}
             </Select>
           </Col>
-
 
           {this.context.isMock && (
             <Col span={3} className="col-item col-item-mock">
@@ -483,43 +706,74 @@ class SchemaItem extends PureComponent {
           )}
 
 
-          <Col span={this.context.isMock ? 2 : 3} className="col-item col-item-desc">
+          <Col span={this.context.isMock ? this.descSpan : this.descSpan+1} className="col-item col-item-desc">
             <Input
               placeholder={LocaleProvider('description')}
               value={value.description}
               onChange={this.handleChangeDesc}
+              title={LocaleProvider('description')}
             />
           </Col>
-					
-					<Col span={2} className="col-item col-item-min">
-					  <Input
-					    placeholder={LocaleProvider('minLength')}
-					    value={value.minLength}
-					    onChange={this.handleChangeMinLength}
-					  />
-					</Col>
-
-					<Col span={2} className="col-item col-item-max">
-					  <Input
-					    placeholder={LocaleProvider('maxLength')}
-					    value={value.maxLength}
-					    onChange={this.handleChangeMaxLength}
-					  />
-					</Col>
-					<Col span={2} className="col-item col-item-default">
-					  <Input
-					    placeholder={LocaleProvider('default')}
-					    value={value.default}
-					    onChange={this.handleChangeDefault}
-					  />
-					</Col>
-					<Col span={2} className="col-item col-item-pattern">
-					  <Input
-					    placeholder={LocaleProvider('pattern')}
-					    value={value.pattern}
-					    onChange={this.handleChangePattern}
-					  />
-					</Col>
+          
+          <Col span={this.minLengthSpan} className="col-item col-item-minLength">
+            <Input
+              placeholder={LocaleProvider('minLength')}
+              value={value.minLength}
+              onChange={this.handleChangeMinLength}
+              title={LocaleProvider('minLength')}
+            />
+          </Col>
+          <Col span={this.maxLengthSpan} className="col-item col-item-maxLength">
+            <Input
+              placeholder={LocaleProvider('maxLength')}
+              value={value.maxLength}
+              onChange={this.handleChangeMaxLength}
+              title={LocaleProvider('maxLength')}
+            />
+          </Col>
+          <Col span={this.minimumSpan} className="col-item col-item-minimum">
+            <InputNumber
+              placeholder={LocaleProvider('minimum')}
+              value={value.minimum}
+              onChange={this.handleChangeMinimum}
+              title={LocaleProvider('minimum')}
+            />
+          </Col>
+          <Col span={this.maximumSpan} className="col-item col-item-maximum">
+            <InputNumber
+              placeholder={LocaleProvider('maximum')}
+              value={value.maximum}
+              onChange={this.handleChangeMaximum}
+              title={LocaleProvider('maximum')}
+            />
+          </Col>
+          <Col span={this.defaultSpan} className="col-item col-item-default">
+            <Input
+              placeholder={LocaleProvider('default')}
+              value={value.default}
+              onChange={this.handleChangeDefault}
+              title={LocaleProvider('default')}
+            />
+          </Col>
+          <Col span={this.defaultBooleanSpan} className="col-item col-item-defaultBoolean">
+            <Select
+              value={_.isUndefined(value.default) ? '' : value.default ? 'true' : 'false'}
+              onChange={this.handleChangeDefaultBoolean}
+              placeholder={LocaleProvider('default')}
+              style={{ width: '100%' }}
+            >
+              <Option value="true">true</Option>
+              <Option value="false">false</Option>
+            </Select>
+          </Col>
+          <Col span={this.patternSpan} className="col-item col-item-pattern">
+            <Input
+              placeholder={LocaleProvider('pattern')}
+              value={value.pattern}
+              onChange={this.handleChangePattern}
+              title={LocaleProvider('pattern')}
+            />
+          </Col>
 
           <Col span={3} className="col-item col-item-setting">
             <span className="adv-set" onClick={this.handleShowAdv}>
