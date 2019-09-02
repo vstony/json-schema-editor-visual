@@ -52,7 +52,7 @@ render(
     <JEditor1
       showEditor={true}
       isMock={true}
-      data={''}
+      data={'{"type":"object","title":"emptyobject","properties":{"f1":{"type":"string","description":"desc1","minLength":"1","maxLength":"100","default":"default1","pattern":"^\\\\w+$"},"f2":{"type":"number","description":"desc2","minimum":1,"exclusiveMinimum":true,"maximum":500,"exclusiveMaximum":true,"default":"5","pattern":"^\\\\d+$"},"f3":{"type":"integer","description":"desc3","minimum":1,"exclusiveMinimum":true,"maximum":200,"exclusiveMaximum":true,"default":"10","pattern":"^\\\\d+$"},"f4":{"type":"boolean","description":"desc4","default":false},"f5":{"type":"object","properties":{"f6":{"type":"string","description":"desc6","minLength":"1","maxLength":"100","default":"default6","pattern":"^\\\\w+$"}},"description":"desc5","required":["f6"]},"f7":{"type":"array","items":{"type":"object","properties":{"f8":{"type":"string","description":"desc8","minLength":"1","maxLength":"100","default":"default8","pattern":"^\\\\w+$"}},"required":["f8"],"description":"itemDesc"},"description":"desc7"}},"description":"rootDesc","required":["f1","f2","f3","f4","f5","f7"]}'}
       onChange={e => {
         console.log('changeValue', e);
       }}

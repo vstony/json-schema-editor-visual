@@ -1,6 +1,6 @@
 const JSONPATH_JOIN_CHAR = '.';
 exports.JSONPATH_JOIN_CHAR = JSONPATH_JOIN_CHAR;
-exports.lang = 'en_US';
+exports.lang = 'zh_CN';
 exports.format = [
   { name: 'date-time' },
   { name: 'date' },
