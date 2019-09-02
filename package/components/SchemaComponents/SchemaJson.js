@@ -366,6 +366,7 @@ class SchemaArray extends PureComponent {
                 value={items.minimum}
                 onChange={this.handleChangeMinimum}
                 title={LocaleProvider('minimum')}
+                style={{ width: '100%' }}
               />
             </Col>
             <Col span={this.maximumSpan} className="col-item col-item-maximum">
@@ -374,6 +375,7 @@ class SchemaArray extends PureComponent {
                 value={items.maximum}
                 onChange={this.handleChangeMaximum}
                 title={LocaleProvider('maximum')}
+                style={{ width: '100%' }}
               />
             </Col>
             <Col span={this.defaultSpan} className="col-item col-item-default">
@@ -815,7 +817,8 @@ class SchemaItem extends PureComponent {
               value={value.minimum}
               onChange={this.handleChangeMinimum}
               title={LocaleProvider('minimum')}
-            />
+              style={{ width: '100%' }}
+              />
           </Col>
           <Col span={this.maximumSpan} className="col-item col-item-maximum">
             <InputNumber
@@ -823,7 +826,8 @@ class SchemaItem extends PureComponent {
               value={value.maximum}
               onChange={this.handleChangeMaximum}
               title={LocaleProvider('maximum')}
-            />
+              style={{ width: '100%' }}
+              />
           </Col>
           <Col span={this.defaultSpan} className="col-item col-item-default">
             <Input
