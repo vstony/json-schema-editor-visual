@@ -78,7 +78,7 @@ class SchemaArray extends PureComponent {
     let key = [].concat(prefix, 'type');
     this.Model.changeTypeAction({ key, value });
 
-    if(value == "string") {
+    if(value === "string") {
       this.descSpan = 2;
       this.minLengthSpan = 2;
       this.maxLengthSpan = 2;
@@ -87,7 +87,7 @@ class SchemaArray extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(value == "number" || value == "integer") {
+    } else if(value === "number" || value === "integer") {
       this.descSpan = 2;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -96,7 +96,7 @@ class SchemaArray extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(value == "array" || value == "object") {
+    } else if(value === "array" || value === "object") {
       this.descSpan = 10;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -105,7 +105,7 @@ class SchemaArray extends PureComponent {
       this.defaultSpan = 0;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 0;
-    } else if(value == "boolean") {
+    } else if(value === "boolean") {
       this.descSpan = 8;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -129,7 +129,7 @@ class SchemaArray extends PureComponent {
   handleChangeMinLength = e => {
     let prefix = this.getPrefix();
     let key = [].concat(prefix, 'minLength');
-    let value = e.target.value;
+    let value = e;
     this.Model.changeValueAction({ key, value });
   };
 
@@ -137,7 +137,7 @@ class SchemaArray extends PureComponent {
   handleChangeMaxLength = e => {
     let prefix = this.getPrefix();
     let key = [].concat(prefix, 'maxLength');
-    let value = e.target.value;
+    let value = e;
     this.Model.changeValueAction({ key, value });
   };
 
@@ -246,7 +246,7 @@ class SchemaArray extends PureComponent {
     let prefixArrayStr = [].concat(prefixArray, 'properties').join(JSONPATH_JOIN_CHAR);
     let showIcon = this.context.getOpenValue([prefixArrayStr]);
 
-    if(items.type == "string") {
+    if(items.type === "string") {
       this.descSpan = 2;
       this.minLengthSpan = 2;
       this.maxLengthSpan = 2;
@@ -255,7 +255,7 @@ class SchemaArray extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(items.type == "number" || items.type == "integer") {
+    } else if(items.type === "number" || items.type === "integer") {
       this.descSpan = 2;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -264,7 +264,7 @@ class SchemaArray extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(items.type == "array" || items.type == "object") {
+    } else if(items.type === "array" || items.type === "object") {
       this.descSpan = 10;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -273,7 +273,7 @@ class SchemaArray extends PureComponent {
       this.defaultSpan = 0;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 0;
-    } else if(items.type == "boolean") {
+    } else if(items.type === "boolean") {
       this.descSpan = 8;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -345,19 +345,21 @@ class SchemaArray extends PureComponent {
               />
             </Col>
             <Col span={this.minLengthSpan} className="col-item col-item-minLength">
-              <Input
-                placeholder={LocaleProvider('minLength')}
-                value={items.minLength}
-                onChange={this.handleChangeMinLength}
-                title={LocaleProvider('minLength')}
+              <InputNumber
+                  placeholder={LocaleProvider('minLength')}
+                  value={items.minLength}
+                  onChange={this.handleChangeMinLength}
+                  title={LocaleProvider('minLength')}
+                  style={{ width: '100%' }}
               />
             </Col>
             <Col span={this.maxLengthSpan} className="col-item col-item-maxLength">
-              <Input
-                placeholder={LocaleProvider('maxLength')}
-                value={items.maxLength}
-                onChange={this.handleChangeMaxLength}
-                title={LocaleProvider('maxLength')}
+              <InputNumber
+                  placeholder={LocaleProvider('maxLength')}
+                  value={items.maxLength}
+                  onChange={this.handleChangeMaxLength}
+                  title={LocaleProvider('maxLength')}
+                  style={{ width: '100%' }}
               />
             </Col>
             <Col span={this.minimumSpan} className="col-item col-item-minimum">
@@ -487,7 +489,7 @@ class SchemaItem extends PureComponent {
   handleChangeMinLength = e => {
     let prefix = this.getPrefix();
     let key = [].concat(prefix, 'minLength');
-    let value = e.target.value;
+    let value = e;
     this.Model.changeValueAction({ key, value });
   };
 
@@ -495,7 +497,7 @@ class SchemaItem extends PureComponent {
   handleChangeMaxLength = e => {
     let prefix = this.getPrefix();
     let key = [].concat(prefix, 'maxLength');
-    let value = e.target.value;
+    let value = e;
     this.Model.changeValueAction({ key, value });
   };
 
@@ -578,7 +580,7 @@ class SchemaItem extends PureComponent {
     let key = [].concat(prefix, 'type');
     this.Model.changeTypeAction({ key, value: e });
 
-    if(e == "string") {
+    if(e === "string") {
       this.descSpan = 2;
       this.minLengthSpan = 2;
       this.maxLengthSpan = 2;
@@ -587,7 +589,7 @@ class SchemaItem extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(e == "number" || e == "integer") {
+    } else if(e === "number" || e === "integer") {
       this.descSpan = 2;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -596,7 +598,7 @@ class SchemaItem extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(e == "array" || e == "object") {
+    } else if(e === "array" || e === "object") {
       this.descSpan = 10;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -605,7 +607,7 @@ class SchemaItem extends PureComponent {
       this.defaultSpan = 0;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 0;
-    } else if(e == "boolean") {
+    } else if(e === "boolean") {
       this.descSpan = 8;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -673,7 +675,7 @@ class SchemaItem extends PureComponent {
     let show = this.context.getOpenValue([prefixStr]);
     let showIcon = this.context.getOpenValue([prefixArrayStr]);
     
-    if(value.type == "string") {
+    if(value.type === "string") {
       this.descSpan = 2;
       this.minLengthSpan = 2;
       this.maxLengthSpan = 2;
@@ -682,7 +684,7 @@ class SchemaItem extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(value.type == "number" || value.type == "integer") {
+    } else if(value.type === "number" || value.type === "integer") {
       this.descSpan = 2;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -691,7 +693,7 @@ class SchemaItem extends PureComponent {
       this.defaultSpan = 2;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 2;
-    } else if(value.type == "array" || value.type == "object") {
+    } else if(value.type === "array" || value.type === "object") {
       this.descSpan = 10;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -700,7 +702,7 @@ class SchemaItem extends PureComponent {
       this.defaultSpan = 0;
       this.defaultBooleanSpan = 0;
       this.patternSpan = 0;
-    } else if(value.type == "boolean") {
+    } else if(value.type === "boolean") {
       this.descSpan = 8;
       this.minLengthSpan = 0;
       this.maxLengthSpan = 0;
@@ -796,19 +798,21 @@ class SchemaItem extends PureComponent {
           </Col>
           
           <Col span={this.minLengthSpan} className="col-item col-item-minLength">
-            <Input
-              placeholder={LocaleProvider('minLength')}
-              value={value.minLength}
-              onChange={this.handleChangeMinLength}
-              title={LocaleProvider('minLength')}
+            <InputNumber
+                placeholder={LocaleProvider('minLength')}
+                value={value.minLength}
+                onChange={this.handleChangeMinLength}
+                title={LocaleProvider('minLength')}
+                style={{ width: '100%' }}
             />
           </Col>
           <Col span={this.maxLengthSpan} className="col-item col-item-maxLength">
-            <Input
-              placeholder={LocaleProvider('maxLength')}
-              value={value.maxLength}
-              onChange={this.handleChangeMaxLength}
-              title={LocaleProvider('maxLength')}
+            <InputNumber
+                placeholder={LocaleProvider('maxLength')}
+                value={value.maxLength}
+                onChange={this.handleChangeMaxLength}
+                title={LocaleProvider('maxLength')}
+                style={{ width: '100%' }}
             />
           </Col>
           <Col span={this.minimumSpan} className="col-item col-item-minimum">
